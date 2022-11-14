@@ -48,6 +48,10 @@ exports.isClass = isClass;
 async function loadClassesFromFiles(files, projectRootDir) {
     //Creates an importer which can import using either a dynamic import or require
     const importFile = async (file) => {
+        if(file.startsWith('C:\\') || file.startsWith('C:/')) {
+            file = 'file:///' + file;
+        }
+        
         try {
             //Try to import in a way that supports ES6 modules
             return await Promise.resolve(new Function('file', 'return import(file)')(file));
